@@ -17,7 +17,8 @@
 #' @param .color A column symbol. Color of points
 #' @param .shape A column symbol. Shape of points
 #' @param .size A column symbol. Size of points
-#' @param  how_many_gates An integer. The number of gates to label
+#' @param opacity A number between 0 and 1. The opacity level of the data points
+#' @param how_many_gates An integer. The number of gates to label
 #' @param gate_list A list of gates. It is returned by gate function as attribute \"gate\". If you want to create this list yourself, each element of the list is a data frame with x and y columns. Each row is a coordinate. The order matter.
 #' @param name A character string. The name of the new column
 #' @param action A character string. Whether to join the new information to the input tbl (add), or just get the non-redundant tbl with the new information (get).
@@ -54,18 +55,25 @@
 #' @rdname gate-methods
 #' @export
 #'
-setGeneric("gate", function(.data,
-																			 .element,
-																			 .dim1,
-																			 .dim2, 
-																			 .color = NULL,
-																			 .shape = NULL,
-																			 .size = NULL,
-																			 how_many_gates = 1,
-																			 gate_list = NULL,
-																			 name = "gate",
-																			 action =	"add", ...)
-	standardGeneric("gate"))
+#'
+#'
+#'
+gate <- function(.data,
+                 .element,
+                 .dim1,
+                 .dim2, 
+                 .color = NULL,
+                 .shape = NULL,
+                 .size = NULL,
+                 opacity = 1,
+                 how_many_gates = 1,
+                 gate_list = NULL,
+                 name = "gate",
+                 action =	"add", ...) {
+  UseMethod("gate")
+}
+
+
 
 # Set internal
 .gate = 		function(.data,
@@ -75,6 +83,7 @@ setGeneric("gate", function(.data,
                               .color = NULL,
                               .shape = NULL,
                               .size = NULL,
+                              opacity = 1,
                               how_many_gates = 1,				
                               gate_list = NULL,
                               name = "gate",
@@ -87,8 +96,7 @@ setGeneric("gate", function(.data,
 	.dim2 = enquo(.dim2)
 	.color = enquo(.color)
 	.shape = enquo(.shape)
-	.size = enquo(.size)
-	
+
 	.data_processed =
 		
 		.data %>% 
@@ -102,7 +110,11 @@ setGeneric("gate", function(.data,
           .dim2 = !!.dim2,
           .color = !!.color,
           .shape = !!.shape,
-          .size = !!.size,
+          
+          # size can be number of column
+          .size =  .size %>% when(is.null(.size) | class(.) == "numeric" ~ (.), ~ !!enquo(.)),
+          
+          opacity = opacity,
           how_many_gates = how_many_gates,
           name = name,
           ...
@@ -159,12 +171,13 @@ setGeneric("gate", function(.data,
 #' gate
 #' @docType methods
 #' @rdname gate-methods
+#' @export
 #' @return A tbl object with additional columns for the reduced dimensions. additional columns for the rotated dimensions. The rotated dimensions will be added to the original data set as `<NAME OF DIMENSION> rotated <ANGLE>` by default, or as specified in the input arguments.
-setMethod("gate", "spec_tbl_df", .gate)
+gate.spec_tbl_df = gate.tbl_df = .gate
 
 #' gate
 #' @docType methods
 #' @rdname gate-methods
+#' @export
 #' @return A tbl object with additional columns for the reduced dimensions. additional columns for the rotated dimensions. The rotated dimensions will be added to the original data set as `<NAME OF DIMENSION> rotated <ANGLE>` by default, or as specified in the input arguments.
-setMethod("gate", "tbl_df", .gate)
-
+gate.tbl_df = .gate

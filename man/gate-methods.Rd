@@ -3,8 +3,8 @@
 \docType{methods}
 \name{gate}
 \alias{gate}
-\alias{gate,spec_tbl_df-method}
-\alias{gate,tbl_df-method}
+\alias{gate.spec_tbl_df}
+\alias{gate.tbl_df}
 \title{Label points within a scatter plot drawing a gate}
 \usage{
 gate(
@@ -15,6 +15,7 @@ gate(
   .color = NULL,
   .shape = NULL,
   .size = NULL,
+  opacity = 1,
   how_many_gates = 1,
   gate_list = NULL,
   name = "gate",
@@ -22,7 +23,7 @@ gate(
   ...
 )
 
-\S4method{gate}{spec_tbl_df}(
+\method{gate}{spec_tbl_df}(
   .data,
   .element,
   .dim1,
@@ -30,6 +31,7 @@ gate(
   .color = NULL,
   .shape = NULL,
   .size = NULL,
+  opacity = 1,
   how_many_gates = 1,
   gate_list = NULL,
   name = "gate",
@@ -37,7 +39,7 @@ gate(
   ...
 )
 
-\S4method{gate}{tbl_df}(
+\method{gate}{tbl_df}(
   .data,
   .element,
   .dim1,
@@ -45,6 +47,7 @@ gate(
   .color = NULL,
   .shape = NULL,
   .size = NULL,
+  opacity = 1,
   how_many_gates = 1,
   gate_list = NULL,
   name = "gate",
@@ -66,6 +69,8 @@ gate(
 \item{.shape}{A column symbol. Shape of points}
 
 \item{.size}{A column symbol. Size of points}
+
+\item{opacity}{A number between 0 and 1. The opacity level of the data points}
 
 \item{how_many_gates}{An integer. The number of gates to label}
 
