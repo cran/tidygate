@@ -68,18 +68,17 @@ test_that("gate grouping", {
   
 })
 
-test_that("gate DEPRECATED", {
-  library(dplyr)
-  
-
-    tidygate::tidygate_data  %>%
-    mutate(sh = factor(hierarchy)) %>%
-    gate(
-      .element = c(`ct 1`, `ct 2`),
-      Dim1, Dim2,
-      gate_list = tidygate::gate_list
-    ) %>%
-      capture_warnings() %>%
-      expect_match("is deprecated as of tidygate 0.3.0.")
-  
-})
+# test_that("gate DEPRECATED", {
+#   library(dplyr)
+#   
+#   data <- mutate(tidygate_data, sh = factor(hierarchy))
+#   lifecycle::expect_deprecated(
+#     gate(
+#       data, 
+#       .element = c(`ct 1`, `ct 2`), 
+#       Dim1, 
+#       Dim2, 
+#       gate_list = gate_list
+#     )
+#   )
+# })
