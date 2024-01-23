@@ -1,7 +1,7 @@
 Package: tidygate
 Type: Package
 Title: Add Gate Information to Your Tibble
-Version: 0.4.9
+Version: 0.4.10
 Authors@R: 
     c(person(given = "Stefano",
            family = "Mangiola",
@@ -19,7 +19,7 @@ License: GPL-3
 Depends: R (>= 3.6.0)
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.0
 Imports: utils, graphics, lifecycle, scales, magrittr, tibble, dplyr,
         purrr, rlang, tidyr, viridis, grDevices, RColorBrewer, stringr
 RdMacros: lifecycle
@@ -30,8 +30,8 @@ biocViews: AssayDomain, Infrastructure
 URL: https://github.com/stemangiola/tidygate
 BugReports: https://github.com/stemangiola/tidygate/issues
 NeedsCompilation: no
-Packaged: 2022-01-20 12:07:21 UTC; mangiola.s
+Packaged: 2024-01-23 01:14:44 UTC; mangiola.s
 Author: Stefano Mangiola [aut, cre],
   Wajid Jawaid [ctb]
 Repository: CRAN
-Date/Publication: 2022-01-20 12:40:02 UTC
+Date/Publication: 2024-01-23 03:10:03 UTC

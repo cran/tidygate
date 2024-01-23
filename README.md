@@ -11,14 +11,14 @@ tidygate: add gate information to your tibble
 
 Please have a look also to
 
--   [nanny](https://github.com/stemangiola/nanny) for tidy high-level
-    data analysis and manipulation
+- [nanny](https://github.com/stemangiola/nanny) for tidy high-level data
+  analysis and manipulation
 
--   [tidyHeatmap](https://github.com/stemangiola/tidyHeatmap) for
-    producing heatmaps following tidy principles
+- [tidyHeatmap](https://github.com/stemangiola/tidyHeatmap) for
+  producing heatmaps following tidy principles
 
--   [tidybulk](https://github.com/stemangiola/tidybulk) for tidy and
-    modular transcriptomics analyses
+- [tidybulk](https://github.com/stemangiola/tidybulk) for tidy and
+  modular transcriptomics analyses
 
 ## Installation
 
@@ -39,10 +39,10 @@ Jawaid.
 
 The main benefits are
 
--   in interactive mode you can draw your gates on extensive ggplot-like
-    scatter plots
--   you can draw multiple gates
--   you can save your gates and apply the programmatically.
+- in interactive mode you can draw your gates on extensive ggplot-like
+  scatter plots
+- you can draw multiple gates
+- you can save your gates and apply the programmatically.
 
 ## Input
 
@@ -74,20 +74,20 @@ tidygate_gate <-
 tidygate_gate
 ```
 
-    ## # A tibble: 2,240 x 9
-    ##    group   hierarchy `ct 1`    `ct 2`    relation cancer_ID   Dim1    Dim2 gate 
-    ##    <chr>       <dbl> <chr>     <chr>        <dbl> <chr>      <dbl>   <dbl> <chr>
-    ##  1 adrenal         1 endothel… epitheli…    -1    ACC       -0.874 -0.239  0    
-    ##  2 adrenal         1 endothel… fibrobla…    -1    ACC       -0.740  0.114  1    
-    ##  3 adrenal         1 endothel… immune_c…    -1    ACC       -0.988  0.118  0    
-    ##  4 adrenal         1 epitheli… endothel…     1    ACC        0.851  0.261  0    
-    ##  5 adrenal         1 epitheli… fibrobla…     1    ACC        0.839  0.320  0    
-    ##  6 adrenal         1 epitheli… immune_c…     1    ACC        0.746  0.337  0    
-    ##  7 adrenal         1 fibrobla… endothel…     1    ACC        0.722 -0.0696 0    
-    ##  8 adrenal         1 fibrobla… epitheli…    -1    ACC       -0.849 -0.317  0    
-    ##  9 adrenal         1 fibrobla… immune_c…     0.52 ACC       -0.776 -0.383  0    
-    ## 10 adrenal         1 immune_c… endothel…     1    ACC        0.980 -0.116  0    
-    ## # … with 2,230 more rows
+    ## # A tibble: 2,240 × 9
+    ##    group   hierarchy `ct 1`      `ct 2`  relation cancer_ID   Dim1    Dim2 gate 
+    ##    <chr>       <dbl> <chr>       <chr>      <dbl> <chr>      <dbl>   <dbl> <chr>
+    ##  1 adrenal         1 endothelial epithe…    -1    ACC       -0.874 -0.239  0    
+    ##  2 adrenal         1 endothelial fibrob…    -1    ACC       -0.740  0.114  1    
+    ##  3 adrenal         1 endothelial immune…    -1    ACC       -0.988  0.118  0    
+    ##  4 adrenal         1 epithelial  endoth…     1    ACC        0.851  0.261  0    
+    ##  5 adrenal         1 epithelial  fibrob…     1    ACC        0.839  0.320  0    
+    ##  6 adrenal         1 epithelial  immune…     1    ACC        0.746  0.337  0    
+    ##  7 adrenal         1 fibroblast  endoth…     1    ACC        0.722 -0.0696 0    
+    ##  8 adrenal         1 fibroblast  epithe…    -1    ACC       -0.849 -0.317  0    
+    ##  9 adrenal         1 fibroblast  immune…     0.52 ACC       -0.776 -0.383  0    
+    ## 10 adrenal         1 immune_cell endoth…     1    ACC        0.980 -0.116  0    
+    ## # ℹ 2,230 more rows
 
 Gates are saved in a temporary file for later use
 
@@ -117,17 +117,17 @@ tidygate_data %>%
   ))
 ```
 
-    ## # A tibble: 2,240 x 9
-    ##    group   hierarchy `ct 1`    `ct 2`    relation cancer_ID   Dim1    Dim2 gate 
-    ##    <chr>       <dbl> <chr>     <chr>        <dbl> <chr>      <dbl>   <dbl> <chr>
-    ##  1 adrenal         1 endothel… epitheli…    -1    ACC       -0.874 -0.239  0    
-    ##  2 adrenal         1 endothel… fibrobla…    -1    ACC       -0.740  0.114  1    
-    ##  3 adrenal         1 endothel… immune_c…    -1    ACC       -0.988  0.118  0    
-    ##  4 adrenal         1 epitheli… endothel…     1    ACC        0.851  0.261  0    
-    ##  5 adrenal         1 epitheli… fibrobla…     1    ACC        0.839  0.320  0    
-    ##  6 adrenal         1 epitheli… immune_c…     1    ACC        0.746  0.337  0    
-    ##  7 adrenal         1 fibrobla… endothel…     1    ACC        0.722 -0.0696 0    
-    ##  8 adrenal         1 fibrobla… epitheli…    -1    ACC       -0.849 -0.317  0    
-    ##  9 adrenal         1 fibrobla… immune_c…     0.52 ACC       -0.776 -0.383  0    
-    ## 10 adrenal         1 immune_c… endothel…     1    ACC        0.980 -0.116  0    
-    ## # … with 2,230 more rows
+    ## # A tibble: 2,240 × 9
+    ##    group   hierarchy `ct 1`      `ct 2`  relation cancer_ID   Dim1    Dim2 gate 
+    ##    <chr>       <dbl> <chr>       <chr>      <dbl> <chr>      <dbl>   <dbl> <chr>
+    ##  1 adrenal         1 endothelial epithe…    -1    ACC       -0.874 -0.239  0    
+    ##  2 adrenal         1 endothelial fibrob…    -1    ACC       -0.740  0.114  1    
+    ##  3 adrenal         1 endothelial immune…    -1    ACC       -0.988  0.118  0    
+    ##  4 adrenal         1 epithelial  endoth…     1    ACC        0.851  0.261  0    
+    ##  5 adrenal         1 epithelial  fibrob…     1    ACC        0.839  0.320  0    
+    ##  6 adrenal         1 epithelial  immune…     1    ACC        0.746  0.337  0    
+    ##  7 adrenal         1 fibroblast  endoth…     1    ACC        0.722 -0.0696 0    
+    ##  8 adrenal         1 fibroblast  epithe…    -1    ACC       -0.849 -0.317  0    
+    ##  9 adrenal         1 fibroblast  immune…     0.52 ACC       -0.776 -0.383  0    
+    ## 10 adrenal         1 immune_cell endoth…     1    ACC        0.980 -0.116  0    
+    ## # ℹ 2,230 more rows
