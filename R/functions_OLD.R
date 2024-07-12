@@ -12,8 +12,7 @@
 #' @importFrom utils head
 #' @importFrom stringr str_pad
 #' @importFrom scales alpha
-#' @importFrom purrr when
-#' @importFrom magrittr %>%
+
 pretty_plot = function(.data,
                        .dim1,
                        .dim2,
@@ -211,7 +210,7 @@ pretty_plot = function(.data,
 #'
 #' @return A tibble with additional columns
 #'
-gate_interactive <-
+gate_interactive_old <-
   function(.data,
            .element,
            .dim1,
@@ -347,16 +346,18 @@ gate_interactive <-
 #' @param .dim2 A column symbol. The y dimension
 #' @param gate_list A list of gates. Each element of the list is a data frame with x and y columns. Each row is a coordinate. The order matter.
 #' @param name A character string. The name of the new column
+#' @param ... Further parameters passed to the function gatepoints::fhs
 #'
 #' @return A tibble with additional columns
 #'
-gate_programmatic <- 
+gate_programmatic_old <- 
   function(.data,
            .element,
            .dim1,
            .dim2, 
            gate_list,
-           name = "gate") {
+           name = "gate", 
+           ...) {
     
     # Comply with CRAN NOTES
     . = NULL

@@ -1,11 +1,11 @@
-## Author: Wajid Jawaid
-## Email: wj241@cam.ac.uk
-## Date: 14 November 2016
+# Author: Wajid Jawaid
+# Email: wj241@cam.ac.uk
+# Date: 14 November 2016
 
-##' Freehand select
-##'
-##' Freehand select function. First generate a 2D plot using R's plot function, 
-##' then select gate region by left clicking. Close polygon by right clicking.
+#' Freehand select
+#'
+#' Freehand select function. First generate a 2D plot using R's plot function, 
+#' then select gate region by left clicking. Close polygon by right clicking.
 ##' The function will return the rownames of the enclosed points by the rownames
 ##' of th co-ordinates given in \code{data}.
 ##' @title Freehand select
@@ -19,16 +19,19 @@
 ##' names parameter is TRUE. If names is FALSE then a logical vector indicating whether points
 ##' are in the polygon is returned.
 ##' @author Wajid Jawaid
+##' @importFrom lifecycle deprecate_warn
 ##' @export
 ##' @examples
-##' \dontrun{
-##' x <- cbind(1:10, 1:10)
-##' rownames(x) <- 1:10
-##' plot(x, pch = 16, col = "red")
-##' fhs(x)
+##' if(interactive()) {
+##'   x <- cbind(1:10, 1:10)
+##'   rownames(x) <- 1:10
+##'   plot(x, pch = 16, col = "red")
+##'   fhs(x)
 ##' }
 ##' @importFrom graphics locator lines points
 fhs <- function(data, mark = TRUE, names = TRUE, ...) {
+  lifecycle::deprecate_warn("1.0.0", "tidygate::fhs()", with = "tidygate::gate()")
+  
   cat("Mark region on plot.\n")
   if (!(is.data.frame(data) || is.matrix(data))) stop("data must be a data frame or matrix")
   if (is.null(rownames(data))) rownames(data) <- 1:nrow(data)
