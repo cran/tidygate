@@ -1,34 +1,34 @@
 Package: tidygate
 Type: Package
 Title: Interactively Gate Points
-Version: 1.0.14
+Version: 1.0.19
 Authors@R: 
     c(person(given = "Stefano",
            family = "Mangiola",
-           role = c("aut", "cre"),
+           role = "aut",
            email = "mangiolastefano@gmail.com"),
       person(given = "Wajid",
              family = "Jawaid",
              role = "ctb"),
       person(given = "William",
              family = "Hutchison",
-             role = "aut",
+             role = c("cre", "aut"),
              email = "hutchison.w@wehi.edu.au",
              comment = c(ORCID = "0009-0001-6242-4269"))
              )
-Maintainer: Stefano Mangiola <mangiolastefano@gmail.com>
+Maintainer: William Hutchison <hutchison.w@wehi.edu.au>
 Description: 
   Interactively gate points on a scatter plot. Interactively drawn gates are 
   recorded and can be applied programmatically to reproduce results exactly. Programmatic gating is 
-  based on the package gatepoints by Wajid Jawaid (who is also an author of this package). 
+  based on the package gatepoints by Wajid Jawaid. 
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.3.1
-Depends: R (>= 3.6.0)
+RoxygenNote: 7.3.3
+Depends: R (>= 4.1.0)
 Imports: utils, graphics, lifecycle, scales, magrittr, tibble, dplyr,
         purrr, rlang, tidyr, viridis, grDevices, RColorBrewer, stringr,
-        shiny, plotly, ggplot2
+        shiny, plotly, ggplot2, xfun
 RdMacros: lifecycle
 Suggests: testthat, markdown, knitr, readr
 VignetteBuilder: knitr
@@ -37,9 +37,10 @@ biocViews: AssayDomain, Infrastructure
 URL: https://github.com/stemangiola/tidygate
 BugReports: https://github.com/stemangiola/tidygate/issues
 NeedsCompilation: no
-Packaged: 2024-09-17 19:33:12 UTC; a1234450
-Author: Stefano Mangiola [aut, cre],
+Packaged: 2025-12-01 01:18:20 UTC; hutchison.w
+Author: Stefano Mangiola [aut],
   Wajid Jawaid [ctb],
-  William Hutchison [aut] (<https://orcid.org/0009-0001-6242-4269>)
+  William Hutchison [cre, aut] (ORCID:
+    <https://orcid.org/0009-0001-6242-4269>)
 Repository: CRAN
-Date/Publication: 2024-09-17 19:50:02 UTC
+Date/Publication: 2025-12-10 08:10:02 UTC

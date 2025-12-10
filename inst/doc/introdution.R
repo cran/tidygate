@@ -9,11 +9,11 @@ library(readr)
 knitr::opts_chunk$set(cache = TRUE, warning = FALSE, message = FALSE, cache.lazy = FALSE)
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  # From Github
-#  devtools::install_github("stemangiola/tidygate")
-#  
-#  # From CRAN
-#  install.package("tidygate")
+# # From Github
+# devtools::install_github("stemangiola/tidygate")
+# 
+# # From CRAN
+# install.package("tidygate")
 
 ## -----------------------------------------------------------------------------
 library(dplyr)
@@ -26,9 +26,9 @@ mtcars |>
   head()
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  mtcars_gated <-
-#    mtcars |>
-#    mutate(gated = gate(x = mpg, y = wt, colour = disp))
+# mtcars_gated <-
+#   mtcars |>
+#   mutate(gated = gate(x = mpg, y = wt, colour = disp))
 
 ## ----echo=FALSE---------------------------------------------------------------
 load("../data/demo_gate_data.rda")
@@ -56,17 +56,17 @@ tidygate_env$gates |>
   head()
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  # Save if needed
-#  tidygate_env$gates |>
-#    write_rds("important_gates.rds")
+# # Save if needed
+# tidygate_env$gates |>
+#   write_rds("important_gates.rds")
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  important_gates <-
-#    read_rds("important_gates.rds")
-#  
-#  mtcars |>
-#    mutate(gated = gate(x = mpg, y = wt, programmatic_gates = important_gates)) |>
-#    filter(!is.na(gated))
+# important_gates <-
+#   read_rds("important_gates.rds")
+# 
+# mtcars |>
+#   mutate(gated = gate(x = mpg, y = wt, programmatic_gates = important_gates)) |>
+#   filter(!is.na(gated))
 
 ## ----echo=FALSE---------------------------------------------------------------
 mtcars |>

@@ -11,6 +11,7 @@ gate(
   shape = NULL,
   alpha = 1,
   size = 2,
+  rasterise_points = FALSE,
   programmatic_gates = NULL
 )
 }
@@ -30,6 +31,10 @@ point alpha, either a numeric or factor of 6 or less levels.}
 
 \item{size}{A single ggplot2 size numeric ranging from 0 to 20. Or, a vector representing the 
 point size, either a numeric or factor of 6 or less levels.}
+
+\item{rasterise_points}{A logical. If TRUE, points are rasterised to an image before interactive 
+gating is launched, improving performance for large datasets. Some interactive features are 
+unavailable with rasterisation enabled.}
 
 \item{programmatic_gates}{A `data.frame` of the gate brush data, as saved in 
 `tidygate_env$gates`. The column `x` records X coordinates, the column `y` records Y coordinates and the column `.gate` 

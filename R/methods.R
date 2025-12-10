@@ -204,12 +204,19 @@ gate_int.numeric = 	function(  .dim1,
 #' @importFrom ggplot2 scale_colour_manual
 #' @importFrom ggplot2 scale_shape_manual
 #' @importFrom ggplot2 scale_alpha_manual
-#' @importFrom ggplot2 scale_shape_manual
+#' @importFrom ggplot2 scale_colour_distiller
 #' @importFrom ggplot2 guides
+#' @importFrom ggplot2 margin
 #' @importFrom ggplot2 theme_bw
+#' @importFrom ggplot2 theme_void
 #' @importFrom ggplot2 theme
+#' @importFrom ggplot2 ggsave
+#' @importFrom plotly ggplotly
+#' @importFrom plotly layout
+#' @importFrom plotly config
 #' @importFrom shiny shinyApp
 #' @importFrom shiny runApp
+#' @importFrom xfun base64_uri
 #' 
 #' @param x A vector representing the X dimension. 
 #' @param y A vector representing the Y dimension.
@@ -221,10 +228,13 @@ gate_int.numeric = 	function(  .dim1,
 #' point alpha, either a numeric or factor of 6 or less levels.
 #' @param size A single ggplot2 size numeric ranging from 0 to 20. Or, a vector representing the 
 #' point size, either a numeric or factor of 6 or less levels.
+#' @param rasterise_points A logical. If TRUE, points are rasterised to an image before interactive 
+#' gating is launched, improving performance for large datasets. Some interactive features are 
+#' unavailable with rasterisation enabled.
 #' @return A vector of strings, of the gates each X and Y coordinate pair is within. If gates are
 #' drawn interactively, they are temporarily saved to `tidygate_env$gates`
 gate_interactive <-
-  function(x, y, colour = NULL, shape = NULL, alpha = 1, size = 2) {
+  function(x, y, colour, shape, alpha, size, rasterise_points) {
     
     # Check input values are valid
     if (!rlang::quo_is_null(shape)) {
@@ -291,6 +301,7 @@ gate_interactive <-
     plot <-
       data |>
       ggplot2::ggplot(ggplot2::aes(x = x, y = y, key = .key)) +
+      # ggrastr::rasterise(ggplot2::geom_point(), dpi = 5) +
       ggplot2::geom_point() +
       ggplot2::labs(x = rlang::quo_name(x), y = rlang::quo_name(y)) +
       theme_bw()
@@ -302,8 +313,7 @@ gate_interactive <-
       if (rlang::quo_is_symbol(colour)) { 
         plot <- 
           plot + 
-          ggplot2::aes(colour = !!colour) +
-          ggplot2::scale_colour_distiller(palette="Spectral")
+          ggplot2::aes(colour = !!colour)
         
       # Set to equal constant if not a column symbol and remove legend
       } else { 
@@ -362,6 +372,59 @@ gate_interactive <-
           ggplot2::guides(size = "none")
       }
     }
+
+  # Create rasterised plot and convert to plotly
+  if (rasterise_points == TRUE) {
+
+    # Create version of plot with no borders, axis, margins or legends
+    plot <-
+      plot +
+      ggplot2::theme_void() +
+      ggplot2::theme(
+        plot.margin = ggplot2::margin(0, 0, 0, 0), 
+        legend.position = "none"
+      )
+
+      # Save plot as image
+      temp_file <-
+        tempfile(fileext = ".png")
+
+      temp_file |>
+        ggplot2::ggsave(plot = plot, width = 5, height = 5, dpi = 300)
+
+      # Create plot with only borders, axis, margins and legends
+      plot_empty <-
+        data |>
+        ggplot2::ggplot(ggplot2::aes(x = x, y = y, key = .key, colour = !!colour, shape = !!shape, alpha = !!alpha, size = !!size)) +
+        ggplot2::geom_point(alpha = 0) +
+        ggplot2::theme_bw()
+
+      # Combine plots
+      plot <-
+        plot_empty |>
+        plotly::ggplotly(tooltip = NULL) |>
+        plotly::layout(images = list(
+          list(
+            source = xfun::base64_uri(temp_file),
+            x = 0, y = 1, xref = "paper", yref = "paper",
+            sizex = 1, sizey = 1,
+            xanchor = "left", yanchor = "top",
+            sizing = "stretch"
+          )),
+        dragmode = "lasso"
+        ) |>
+
+        # Prevent any actions which could disalign points and plot
+        plotly::config(modeBarButtonsToRemove = c("zoom2d", "zoomIn2d", "zoomOut2d", "pan2d", "autoScale2d", "resetScale2d", "hoverClosestCartesian", "hoverCompareCartesian", "select2d"))
+    
+    # Convert ggplot directly to plotly
+    } else {
+      plot <-
+        plot |>
+        plotly::ggplotly(tooltip = NULL) |>
+        plotly::layout(dragmode = "lasso") |>
+        plotly::config(modeBarButtonsToRemove = c("select2d", "hoverClosestCartesian", "hoverCompareCartesian"))
+    }
     
     # Create environment and save input variables
     tidygate_env <<- rlang::env()
@@ -380,7 +443,7 @@ gate_interactive <-
       shiny::runApp(app, port = 1234) |> 
       purrr::map_chr(~ .x |> paste(collapse = ",")) |>
       purrr::map_chr(~ ifelse(.x == "", NA, .x))
-    
+
     message("tidygate says: interactively drawn gates are temporarily saved to tidygate_env$gates")
     return(gate_vector)
   }
@@ -453,6 +516,9 @@ gate_programmatic <-
 #' point alpha, either a numeric or factor of 6 or less levels.
 #' @param size A single ggplot2 size numeric ranging from 0 to 20. Or, a vector representing the 
 #' point size, either a numeric or factor of 6 or less levels.
+#' @param rasterise_points A logical. If TRUE, points are rasterised to an image before interactive 
+#' gating is launched, improving performance for large datasets. Some interactive features are 
+#' unavailable with rasterisation enabled.
 #' @param programmatic_gates A `data.frame` of the gate brush data, as saved in 
 #' `tidygate_env$gates`. The column `x` records X coordinates, the column `y` records Y coordinates and the column `.gate` 
 #' records the gate number. When this argument is supplied, gates will be drawn programmatically.
@@ -473,11 +539,11 @@ gate_programmatic <-
 #'   mutate(gated = gate(x = mpg, y = wt, programmatic_gates = demo_gate_data))
 #' @export
 gate <-
-  function(x, y, colour = NULL, shape = NULL, alpha = 1, size = 2, programmatic_gates = NULL) {
+  function(x, y, colour = NULL, shape = NULL, alpha = 1, size = 2, rasterise_points = FALSE, programmatic_gates = NULL) {
     
     if (is.null(programmatic_gates)) {
       gate_interactive(x = enquo(x), y = enquo(y), colour = enquo(colour), shape = enquo(shape), 
-                       alpha = enquo(alpha), size = enquo(size))
+                       alpha = enquo(alpha), size = enquo(size), rasterise_points = rasterise_points)
     } else {
       gate_programmatic(x = x, y = y, programmatic_gates = programmatic_gates)
     }

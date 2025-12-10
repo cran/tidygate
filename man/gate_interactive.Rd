@@ -4,7 +4,7 @@
 \alias{gate_interactive}
 \title{Interactively gate data with a simple scatter plot}
 \usage{
-gate_interactive(x, y, colour = NULL, shape = NULL, alpha = 1, size = 2)
+gate_interactive(x, y, colour, shape, alpha, size, rasterise_points)
 }
 \arguments{
 \item{x}{A vector representing the X dimension.}
@@ -22,6 +22,10 @@ point alpha, either a numeric or factor of 6 or less levels.}
 
 \item{size}{A single ggplot2 size numeric ranging from 0 to 20. Or, a vector representing the 
 point size, either a numeric or factor of 6 or less levels.}
+
+\item{rasterise_points}{A logical. If TRUE, points are rasterised to an image before interactive 
+gating is launched, improving performance for large datasets. Some interactive features are 
+unavailable with rasterisation enabled.}
 }
 \value{
 A vector of strings, of the gates each X and Y coordinate pair is within. If gates are

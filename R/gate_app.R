@@ -73,12 +73,7 @@ server <- function(input, output, session) {
   brush_data <- tibble()
   
   # Draw plot
-  output$plot <- plotly::renderPlotly({
-    tidygate_env$input_plot |>
-        plotly::ggplotly(tooltip = NULL) |>
-        plotly::layout(dragmode = "lasso") |>
-        plotly::config(modeBarButtonsToRemove = c("zoomIn2d", "zoomOut2d", "select2d"))      
-  })
+  output$plot <- plotly::renderPlotly({tidygate_env$input_plot})
 
   # Get selection information
   output$select <- 
